@@ -27,11 +27,11 @@
 #define LED   13
 
 // How many sensors?
-#define SENSORS 5
+#define SENSORS 1
 
 // Arduino pin numbers for each sensor,
 // port 0 ... port 4, for 5 sensors:
-int pins[SENSORS] = { 8, 9, 10, 11, 12 };
+int pins[SENSORS] = { 12 };
 
 // the current state of each sensor (light or no light seen?)
 int state[SENSORS];
@@ -128,4 +128,3 @@ void loop()
         }
     }
 }
-
