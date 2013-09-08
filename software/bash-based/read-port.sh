@@ -17,13 +17,13 @@ echo "Starting main loop on $DEV"
 while read line
 do
         IFS=' ' read -a array <<< "$line"
-        echo "Aquiring lock"
+        echo "Aquiring lock for read"
         while [ -e /tmp/read-lock ]
         do
                 sleep 1s
         done
         touch /tmp/lock
-        echo "Got lock"
+        echo "Got lock for read"
         for index in "${!array[@]}"
         do
                 filevalue=`cat /tmp/port-$index 2> /dev/null`
@@ -32,6 +32,6 @@ do
                 echo "Found ${array[index]} on port $index. File value is $filevalue. Previous value was $oldvalue. New value will be $newvalue"
                 echo "$newvalue" > /tmp/port-$index
         done
-        echo "Releasing lock"
+        echo "Releasing lock for read"
         rm /tmp/lock
 done < /dev/ttyUSB0
