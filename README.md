@@ -2,13 +2,17 @@
 arduino-powermunin
 ==================
 
-This is a very simple but working project to monitor the blinking led on
-common electricity meters (power meters) installed by utility companies.
+This project is a fork of https://raw.github.com/hessu/arduino-powermunin. 
+
+The idea is to monitor the blinking led on common electricity meters 
+(power meters) installed by utility companies. Instead of using Perl, 
+the aim is to use bash instead. Using bash will allow anyone to run this
+software, even on a modem with a distro like Freetz. 
 
 Minimum amount of components and code, but it works. Takes one evening to
 set up.
 
-![Example munin graph](https://raw.github.com/hessu/arduino-powermunin/master/img/munin-power_a3-day.png)
+![Example munin graph](https://raw.github.com/pvanassen/arduino-powermunin/master/hardware/usage/munin-power_a3-day.png)
 
 License (same as Perl)
 ----------------------
@@ -55,12 +59,12 @@ The arduino code runs in a loop, reads I/O pin states, counts the amount of
 blinks (how many times has a pin gone from HIGH to LOW), and prints the
 counts on the (USB) serial port every 5 seconds.
 
-A daemon written in Perl (powermunind) reads the reports on the serial port,
+A daemon written in Bash (read-port.sh) reads the reports on the serial port,
 prints them to a state file on disk (or tmpfs to reduce disk I/O or flash
 wearout).
 
-A munin plugin written as a very simple shell script (power_munin) dumps the
-contents of that state file when run by the munin agent.
+Another daemon (push.sh) will push the number of blinks recorded to services
+like xively and open sense. 
 
 Building and Installation instructions (short version)
 ------------------------------------------------------
@@ -82,11 +86,12 @@ Building and Installation instructions (short version)
    the meter is in a well-luminated place instead of a dark closet like
    mine, put black tape on the back of the transistor so that the light from
    the outside does not interfere.
-5. Run src/powermunind which collects counter increments and dumps them
+5. Run read-port.sh which collects counter increments and dumps them
    to a state file. Put it in a startup script such as /etc/rc.local
    so that it starts up after a reboot.
-6. Install src/power_munin munin plugin which gives out the state file
-   to munin. Optionally, set some configuration within the script.
+6. Configure xively.conf and/or sense.conf and run push.sh to see the results
+   online. These results will be the amount of blinks per minute registered.
+   Some math may be applied to get sane results. 
 
 Adjustments for different power meters
 --------------------------------------
