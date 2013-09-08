@@ -1,0 +1,4 @@
+'{'
+'	"feed_id": '$FEED_ID','
+'	"value": '${VALUE}
+'}'
