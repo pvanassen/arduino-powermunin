@@ -1,0 +1,8 @@
+'{'
+'  "version":"1.0.0",'
+'  "datastreams":['
+'      {"id":"'${DATASTREAM_ID}'",'
+'       "current_value":"'${VALUE}'"'
+'      }'
+'  ]'
+'}'
